@@ -4,6 +4,8 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("access_token")?.value;
 
+  console.log("==============>>>", token);
+
   // Protected routes
   const protectedRoutes = ["/dashboard", "/profile"];
 
