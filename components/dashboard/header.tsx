@@ -11,11 +11,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, User } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccount, setAccount } from "@/redux/features/profile";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function Header() {
-  const handleLogout = () => {
-    // Handle logout logic here
-    console.log("Logging out...");
+  const auth = useSelector(selectAccount);
+  const dispatch = useDispatch();
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    ).then((res) => res.json());
+    console.log(res);
+    dispatch(setAccount(null));
+    router.push("/");
   };
 
   return (
@@ -23,14 +41,16 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Link2 className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold text-foreground">URLShort</span>
+          <Link href="/">
+            <span className="text-xl font-bold text-foreground">URLShort</span>
+          </Link>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full">
               <Avatar className="h-9 w-9 cursor-pointer transition-opacity hover:opacity-80">
-                <AvatarImage src="/diverse-user-avatars.png" alt="User" />
+                <AvatarImage src={auth?.image} alt="User" />
                 <AvatarFallback className="bg-primary text-primary-foreground">
                   JD
                 </AvatarFallback>

@@ -2,11 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 
-const API_BASE = "http://localhost:3000"
-
 export function SocialButtons() {
   const handleSocialLogin = (provider: "google" | "github" | "facebook") => {
-    window.location.href = `${API_BASE}/auth/${provider}/login`
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/${provider}/login`
   }
 
   return (
