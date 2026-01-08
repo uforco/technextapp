@@ -10,17 +10,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SocialButtons } from "./social-buttons"
 
-const API_BASE = "http://localhost:3000"
-
 export function RegisterForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    firstName: "md",
+    lastName: "sharif",
+    email: "sharif@gmail.com",
+    password: "Sharif@#123",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,11 +34,12 @@ export function RegisterForm() {
     setError("")
 
     try {
-      const response = await fetch(`${API_BASE}/auth/registration`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/registration`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       })
 
@@ -52,7 +51,7 @@ export function RegisterForm() {
 
       // Handle successful registration
       console.log("Registration successful:", data)
-      router.push("/login")
+      router.push("/dashboard")
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {

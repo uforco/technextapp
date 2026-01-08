@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SocialButtons } from "./social-buttons"
 
-const API_BASE = "http://localhost:3000"
-
 export function LoginForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +32,7 @@ export function LoginForm() {
     setError("")
 
     try {
-      const response = await fetch(`${API_BASE}/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
