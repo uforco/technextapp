@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { setAccount } from "./features/profile";
+import { removeAccount, setAccount } from "./features/profile";
 
 const ReduxProvider = ({ children }: { children: React.ReactNode }) => {
   const [storeInstance] = useState(() => store());
@@ -26,7 +26,7 @@ const AuthUser = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const authme = async () => {
-      const storedAccount = await fetch(
+      const data = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
         {
           headers: {
@@ -34,8 +34,13 @@ const AuthUser = ({ children }: { children: React.ReactNode }) => {
           },
           credentials: "include",
         }
-      ).then((res) => res.json());
-      if (storedAccount) {
+      );
+      if (!data.ok || data.status !== 200) {
+        dispatch(removeAccount());
+        return;
+      }
+      const storedAccount = await data.json();
+      if (data.ok && data.status == 200 && storedAccount) {
         dispatch(setAccount(storedAccount));
       }
     };

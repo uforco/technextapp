@@ -12,14 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, User } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAccount, setAccount } from "@/redux/features/profile";
+import {
+  removeAccount,
+  selectAccount,
+  setAccount,
+} from "@/redux/features/profile";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function Header() {
   const auth = useSelector(selectAccount);
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogout = async () => {
     const res = await fetch(
@@ -32,7 +36,7 @@ export function Header() {
       }
     ).then((res) => res.json());
     console.log(res);
-    dispatch(setAccount(null));
+    dispatch(removeAccount());
     router.push("/");
   };
 
