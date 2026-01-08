@@ -29,4 +29,4 @@ export const { setAccount, removeAccount } = profileSlice.actions;
 export default profileSlice.reducer;
 
 // Selector function to be used with useSelector in components
-export const selectAccount = (state: RootState) => state.profile;
+export const selectAccount = (state: RootState) => state.profile.account

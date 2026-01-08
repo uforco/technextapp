@@ -1,8 +1,18 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { Button } from "../ui/button";
+import { useSelector } from "react-redux";
+import { selectAccount } from "@/redux/features/profile";
 
 const LoginBtn = () => {
+   
+  const auth = useSelector(selectAccount);
+
+  
+
+  console.log(auth);
+
   return (
     <>
       <div className="flex items-center gap-3">

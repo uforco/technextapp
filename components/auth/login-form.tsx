@@ -17,8 +17,8 @@ export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: "sharif@gmail.com",
+    password: "Sharif@#123",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
