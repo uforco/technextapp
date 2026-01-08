@@ -1,6 +1,7 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Link2, Zap, Shield, BarChart3, ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Link2, Zap, Shield, BarChart3, ArrowRight } from "lucide-react";
+import LoginBtn from "../components/homePage/loginBtn";
 
 export default function Page() {
   return (
@@ -12,10 +13,15 @@ export default function Page() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
               <Link2 className="h-4 w-4 text-background" />
             </div>
-            <span className="text-xl font-semibold tracking-tight">Shortify</span>
+            <span className="text-xl font-semibold tracking-tight">
+              Shortify
+            </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="#features"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Features
             </Link>
             <Link
@@ -24,20 +30,15 @@ export default function Page() {
             >
               How it works
             </Link>
-            <Link href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="#pricing"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
               Pricing
             </Link>
           </nav>
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm">
-                Log in
-              </Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button size="sm">Get Started</Button>
-            </Link>
-          </div>
+
+          <LoginBtn></LoginBtn>
         </div>
       </header>
 
@@ -57,8 +58,9 @@ export default function Page() {
             <span className="text-muted-foreground">Amplify reach.</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty">
-            Transform long, unwieldy URLs into clean, memorable links. Track clicks, analyze performance, and optimize
-            your marketing with our powerful URL shortener.
+            Transform long, unwieldy URLs into clean, memorable links. Track
+            clicks, analyze performance, and optimize your marketing with our
+            powerful URL shortener.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/dashboard">
@@ -68,7 +70,11 @@ export default function Page() {
               </Button>
             </Link>
             <Link href="#how-it-works">
-              <Button variant="outline" size="lg" className="h-12 px-8 text-base bg-transparent">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-12 px-8 text-base bg-transparent"
+              >
                 See how it works
               </Button>
             </Link>
@@ -87,8 +93,12 @@ export default function Page() {
               { value: "150+", label: "Countries" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold tracking-tight">{stat.value}</div>
-                <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                <div className="text-3xl md:text-4xl font-bold tracking-tight">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
@@ -103,23 +113,36 @@ export default function Page() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
                 <Link2 className="h-4 w-4 text-background" />
               </div>
-              <span className="text-xl font-semibold tracking-tight">Shortify</span>
+              <span className="text-xl font-semibold tracking-tight">
+                Shortify
+              </span>
             </div>
             <div className="flex items-center gap-8 text-sm text-muted-foreground">
-              <Link href="#" className="hover:text-foreground transition-colors">
+              <Link
+                href="#"
+                className="hover:text-foreground transition-colors"
+              >
                 Privacy
               </Link>
-              <Link href="#" className="hover:text-foreground transition-colors">
+              <Link
+                href="#"
+                className="hover:text-foreground transition-colors"
+              >
                 Terms
               </Link>
-              <Link href="#" className="hover:text-foreground transition-colors">
+              <Link
+                href="#"
+                className="hover:text-foreground transition-colors"
+              >
                 Contact
               </Link>
             </div>
-            <div className="text-sm text-muted-foreground">© 2026 Shortify. All rights reserved.</div>
+            <div className="text-sm text-muted-foreground">
+              © 2026 Shortify. All rights reserved.
+            </div>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
