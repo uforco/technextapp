@@ -8,8 +8,9 @@ import { UrlDetail } from "./url-detail";
 
 export interface UrlData {
   id: string;
-  shortUrl: string;
-  longUrl: string;
+  shorturl: string;
+  longurl: string;
+  count: number;
 }
 
 export function Dashboard() {

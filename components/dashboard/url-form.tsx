@@ -1,52 +1,67 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Loader2 } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Plus, Loader2 } from "lucide-react";
 
 interface UrlFormProps {
-  onUrlCreated: () => void
+  onUrlCreated: () => void;
 }
 
 export function UrlForm({ onUrlCreated }: UrlFormProps) {
-  const [url, setUrl] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [url, setUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!url.trim()) return
+    e.preventDefault();
+    if (!url.trim()) return;
 
-    setIsLoading(true)
-    setError("")
+    setIsLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("/dashboard/create/short-url", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/create/short-url`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ url }),
+        }
+      );
 
-      if (!response.ok) throw new Error("Failed to create short URL")
+      if (!response.ok) throw new Error("Failed to create short URL");
 
-      setUrl("")
-      onUrlCreated()
+      const data = await response.json();
+      console.log(data);
+
+      setUrl("");
+      onUrlCreated();
     } catch {
-      setError("Failed to create short URL. Please try again.")
+      setError("Failed to create short URL. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Create Short URL</CardTitle>
-        <CardDescription>Enter a long URL to generate a shortened version</CardDescription>
+        <CardDescription>
+          Enter a long URL to generate a shortened version
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="flex gap-3">
@@ -72,5 +87,5 @@ export function UrlForm({ onUrlCreated }: UrlFormProps) {
         {error && <p className="text-sm text-destructive mt-2">{error}</p>}
       </CardContent>
     </Card>
-  )
+  );
 }
