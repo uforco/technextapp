@@ -2,10 +2,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Link2, Zap, Shield, BarChart3, ArrowRight } from "lucide-react";
 import LoginBtn from "../components/homePage/loginBtn";
+import Popup from "../components/homePage/Popup";
 
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col">
+      <Popup></Popup>
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
