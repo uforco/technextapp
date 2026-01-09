@@ -9,15 +9,20 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SocialButtons } from "./social-buttons"
+import { useSelector } from "react-redux"
+import { selectAccount } from "@/redux/features/profile"
 
 export function LoginForm() {
   const router = useRouter()
+  const auth = useSelector(selectAccount)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     email: "sharif@gmail.com",
     password: "Sharif@#123",
   })
+
+  if(auth) router.push('/dashboard')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
