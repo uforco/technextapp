@@ -34,6 +34,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
+  console.log("========layout======>>>", process.env.NODE_ENV);
+
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
