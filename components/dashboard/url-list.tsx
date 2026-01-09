@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Trash2, ExternalLink, Loader2, Copy, Check } from "lucide-react";
 import type { UrlData } from "./dashboard";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { removeAccount } from "@/redux/features/profile";
 
 interface UrlListProps {
   onSelectUrl: (url: UrlData) => void;
@@ -21,7 +23,8 @@ interface UrlListProps {
 }
 
 export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [urls, setUrls] = useState<UrlData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -38,7 +41,7 @@ export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
           credentials: "include",
         }
       );
-      if(!response.ok && response.status == 403) router.push("/login");
+      if (!response.ok && response.status == 403) router.push("/login");
       if (!response.ok) throw new Error("Failed to fetch URLs");
       const data = await response.json();
       setUrls(data);
@@ -58,10 +61,20 @@ export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
     setDeletingId(id);
 
     try {
-      const response = await fetch(`/dashboard/delete/${id}`, {
-        method: "DELETE",
-      });
-      if(!response.ok && response.status == 403) router.push("/login");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dashboard/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      if (!response.ok && response.status == 403) {
+        dispatch(removeAccount());
+        router.push("/login");
+      }
       if (!response.ok) throw new Error("Failed to delete URL");
       setUrls((prev) => prev.filter((url) => url.id !== id));
       onUrlDeleted();

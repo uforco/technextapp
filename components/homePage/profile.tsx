@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User, LayoutDashboard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAccount, selectAccount } from "@/redux/features/profile";
@@ -63,10 +63,8 @@ const Profile = () => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={goDashboard}
-            className="text-destructive focus:text-destructive"
-          >
+          <DropdownMenuItem onClick={goDashboard}>
+            <LayoutDashboard className="mr-2 h-4 w-4" />
             Dashboard
           </DropdownMenuItem>
           <DropdownMenuItem>
