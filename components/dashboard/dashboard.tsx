@@ -5,7 +5,6 @@ import { Header } from "./header";
 import { UrlForm } from "./url-form";
 import { UrlList } from "./url-list";
 import { UrlDetail } from "./url-detail";
-import { useRouter } from "next/navigation";
 
 export interface UrlData {
   id: string;
@@ -14,12 +13,7 @@ export interface UrlData {
   count: number;
 }
 
-export function Dashboard({token}: {token?: string}) {
-
-  const route = useRouter()
-  if(!token) {
-    route.push("/login")
-  }
+export function Dashboard() {
   const [selectedUrl, setSelectedUrl] = useState<UrlData | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 

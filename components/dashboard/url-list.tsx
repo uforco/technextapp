@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash2, ExternalLink, Loader2, Copy, Check } from "lucide-react";
 import type { UrlData } from "./dashboard";
+import { useRouter } from "next/navigation";
 
 interface UrlListProps {
   onSelectUrl: (url: UrlData) => void;
@@ -20,6 +21,7 @@ interface UrlListProps {
 }
 
 export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
+  const router = useRouter()
   const [urls, setUrls] = useState<UrlData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -36,6 +38,7 @@ export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
           credentials: "include",
         }
       );
+      if(!response.ok && response.status == 403) router.push("/login");
       if (!response.ok) throw new Error("Failed to fetch URLs");
       const data = await response.json();
       setUrls(data);
@@ -58,6 +61,7 @@ export function UrlList({ onSelectUrl, onUrlDeleted }: UrlListProps) {
       const response = await fetch(`/dashboard/delete/${id}`, {
         method: "DELETE",
       });
+      if(!response.ok && response.status == 403) router.push("/login");
       if (!response.ok) throw new Error("Failed to delete URL");
       setUrls((prev) => prev.filter((url) => url.id !== id));
       onUrlDeleted();

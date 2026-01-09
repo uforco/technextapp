@@ -13,12 +13,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Plus, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface UrlFormProps {
   onUrlCreated: () => void;
 }
 
 export function UrlForm({ onUrlCreated }: UrlFormProps) {
+  const router = useRouter();
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +42,7 @@ export function UrlForm({ onUrlCreated }: UrlFormProps) {
           body: JSON.stringify({ url }),
         }
       );
-
+      if(!response.ok && response.status == 403) router.push("/login");
       if (!response.ok) throw new Error("Failed to create short URL");
 
       const data = await response.json();
