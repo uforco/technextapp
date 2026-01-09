@@ -1,6 +1,13 @@
 import { Dashboard } from "@/components/dashboard/dashboard";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return <Dashboard />
+export default async function Home() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+  if (!token) {
+    redirect("/");
+  }
+
+  return <Dashboard />;
 }
-
