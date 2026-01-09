@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get("access_token")?.value;
 
   console.log("==============>>>", token);
@@ -13,9 +13,9 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith(route)
   );
 
-  if (isProtected && !token) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
+  // if (isProtected && !token) {
+  //   return NextResponse.redirect(new URL("/login", req.url));
+  // }
 
   return NextResponse.next();
 }
