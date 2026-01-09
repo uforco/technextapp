@@ -1,74 +1,90 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { SocialButtons } from "./social-buttons"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SocialButtons } from "./social-buttons";
+import { useSelector } from "react-redux";
+import { selectAccount } from "@/redux/features/profile";
 
 export function RegisterForm() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const router = useRouter();
+  const auth = useSelector(selectAccount);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     firstName: "md",
     lastName: "sharif",
     email: "sharif@gmail.com",
     password: "Sharif@#123",
-  })
+  });
+
+  if (auth) router.push("/dashboard");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/registration`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/registration`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed")
+        throw new Error(data.message || "Registration failed");
       }
 
       // Handle successful registration
-      console.log("Registration successful:", data)
-      router.push("/dashboard")
+      console.log("Registration successful:", data);
+      router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-card border border-border rounded-xl p-8 shadow-sm">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-card-foreground">Create an account</h1>
-          <p className="text-muted-foreground mt-2">Get started with your free account</p>
+          <h1 className="text-2xl font-bold text-card-foreground">
+            Create an account
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Get started with your free account
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm">{error}</div>}
+          {error && (
+            <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+              {error}
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -140,7 +156,9 @@ export function RegisterForm() {
             <div className="w-full border-t border-border"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-card px-4 text-muted-foreground">Or continue with</span>
+            <span className="bg-card px-4 text-muted-foreground">
+              Or continue with
+            </span>
           </div>
         </div>
 
@@ -148,11 +166,14 @@ export function RegisterForm() {
 
         <p className="text-center text-sm text-muted-foreground mt-6">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary font-medium hover:underline">
+          <Link
+            href="/login"
+            className="text-primary font-medium hover:underline"
+          >
             Sign in
           </Link>
         </p>
       </div>
     </div>
-  )
+  );
 }
