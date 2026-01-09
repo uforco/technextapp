@@ -31,7 +31,7 @@ export function Dashboard() {
     setRefreshKey((prev) => prev + 1);
   };
 
-  if (!auth) route.push("/login");
+  if (!auth) route.push("/");
 
   return (
     <div className="min-h-screen bg-background">
