@@ -66,7 +66,7 @@ export function Header() {
               <div className="flex flex-col">
                 <span className="font-medium">John Doe</span>
                 <span className="text-xs text-muted-foreground">
-                  john@example.com
+                  {auth?.email}
                 </span>
               </div>
             </DropdownMenuLabel>
