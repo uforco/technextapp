@@ -140,7 +140,9 @@ export default function Page() {
               </Link>
             </div>
             <div className="text-sm text-muted-foreground">
-              © 2026 Shortify. All rights reserved.
+              © 2026 
+              <Link className=" hover:text-[#00ff99] font-extrabold " href={"https://sharifdev.vercel.app"}> Shortify . </Link>
+              All rights reserved.
             </div>
           </div>
         </div>
