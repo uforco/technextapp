@@ -5,6 +5,9 @@ import { Header } from "./header";
 import { UrlForm } from "./url-form";
 import { UrlList } from "./url-list";
 import { UrlDetail } from "./url-detail";
+import { useSelector } from "react-redux";
+import { selectAccount } from "@/redux/features/profile";
+import { useRouter } from "next/navigation";
 
 export interface UrlData {
   id: string;
@@ -14,6 +17,8 @@ export interface UrlData {
 }
 
 export function Dashboard() {
+  const auth = useSelector(selectAccount);
+  const route = useRouter();
   const [selectedUrl, setSelectedUrl] = useState<UrlData | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -25,6 +30,8 @@ export function Dashboard() {
     setSelectedUrl(null);
     setRefreshKey((prev) => prev + 1);
   };
+
+  if (!auth) route.push("/login");
 
   return (
     <div className="min-h-screen bg-background">
