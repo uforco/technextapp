@@ -4,6 +4,7 @@ import React, { use, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import { selectAccount } from "@/redux/features/profile";
+import Profile from "./profile";
 
 const LoginBtn = () => {
   const auth = useSelector(selectAccount);
@@ -12,18 +13,21 @@ const LoginBtn = () => {
 
   return (
     <>
-      <div className="flex items-center gap-3">
-        {!auth && (
-          <Link href="/login">
-            <Button variant="ghost" size="sm">
-              Log in
-            </Button>
-          </Link>
+      <div className="flex items-center gap-4">
+        {auth ? (
+          <Profile></Profile>
+        ) : (
+          <>
+            <Link href="/dashboard">
+              <Button size="sm">Get Started</Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="ghost" size="sm">
+                Log in
+              </Button>
+            </Link>
+          </>
         )}
-
-        <Link href="/dashboard">
-          <Button size="sm">Get Started</Button>
-        </Link>
       </div>
     </>
   );
